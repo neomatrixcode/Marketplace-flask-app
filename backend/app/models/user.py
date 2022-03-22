@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy import Integer, String, ForeignKey, Boolean
 
 from app.main.database import db, BaseModelMixin
 
@@ -14,6 +14,7 @@ class User(db.Model, BaseModelMixin):
     password = db.Column(String(50), nullable=False)
     email = db.Column(String(100), nullable=False, unique=True)
     rol = db.Column(Integer, ForeignKey('roles.id'), nullable = False)
+    active = db.Column(Boolean, default=True)
 
     def __init__(self, fullname, username, password, email, rol):
         self.fullname = fullname

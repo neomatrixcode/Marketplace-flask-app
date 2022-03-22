@@ -8,7 +8,9 @@ from app.serializers.user import UserSchema
 class UserResource(Resource):
     def get(self, id):
         user = User.get_by_id(id)
-        result = UserSchema().dump(user)
+        result= {}
+        if user.active == True:
+            result = UserSchema().dump(user)
         return result
 
     def delete(self, id):
@@ -18,7 +20,7 @@ class UserResource(Resource):
 class UserListResource(Resource):
 
     def get(self):
-        users = User.get_all()
+        users = User.simple_filter(active=True)
         result = UserSchema().dump(users, many=True)
         return result
 

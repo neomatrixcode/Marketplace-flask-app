@@ -8,7 +8,9 @@ from app.serializers.product import ProductSchema
 class ProductResource(Resource):
     def get(self, sku):
         product = Product.get_by_id(sku)
-        result = ProductSchema().dump(product)
+        result={}
+        if product.active == True:
+            result = ProductSchema().dump(product)
         return result
 
     def post(self, id):
@@ -21,7 +23,7 @@ class ProductResource(Resource):
 class ProductListResource(Resource):
 
     def get(self):
-        products = Product.get_all()
+        products = Product.simple_filter(active=True)
         result = ProductSchema().dump(products, many=True)
         return result
 

@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, Boolean
 
 from app.main.database import db, BaseModelMixin
 
@@ -13,6 +13,7 @@ class Product(db.Model, BaseModelMixin):
     price = db.Column(Integer, nullable=True)
     mark = db.Column(String(50), nullable=True)
     quantity = db.Column(Integer, nullable=True)
+    active = db.Column(Boolean, default=True)
 
     def __init__(self, sku, name, price, mark, quantity):
         self.sku = sku
