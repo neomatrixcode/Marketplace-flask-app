@@ -15,13 +15,31 @@ class ProductResource(Resource):
         if product.active == True:
             result = ProductSchema().dump(product)
         return result
+
     @token_required_admin
-    def post(self, id):
-        return "", 201
+    def put(self, sku):
+        data = json.loads(request.data)
+        product_dict = ProductSchema().loads(json.dumps(data))
+        product = Product.get_by_id(sku)
+        if("name" in product_dict):
+            product.name = product_dict['name']
+        if("price" in product_dict):
+            product.price = product_dict['price']
+        if("mark" in product_dict):
+            product.mark = product_dict['mark']
+        if("quantity" in product_dict):
+            product.quantity = product_dict['quantity']
+        product.save()
+        result = ProductSchema().dump(product)
+        return result
 
-    def delete(self, id):
-        pass
-
+    @token_required_admin
+    def delete(self, sku):
+        product = Product.get_by_id(sku)
+        product.active = 0;
+        product.save()
+        result = ProductSchema().dump(product)
+        return result
 
 class ProductListResource(Resource):
 
@@ -34,9 +52,7 @@ class ProductListResource(Resource):
     @token_required_admin
     def post(self):
         data = json.loads(request.data)
-        print(data)
         product_dict = ProductSchema().loads(json.dumps(data))
-        print(product_dict)
         product = Product(
             sku = product_dict['sku'],
             name = product_dict['name'],

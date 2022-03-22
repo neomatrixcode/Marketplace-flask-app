@@ -15,13 +15,31 @@ class UserResource(Resource):
         if user.active == True:
             result = UserSchema().dump(user)
         return result
+
     @token_required_admin
     def put(self, id):
-        pass
+        data = json.loads(request.data)
+        user_dict = UserSchema().loads(json.dumps(data))
+        user = User.get_by_id(id)
+        if("fullname" in user_dict):
+            user.fullname = user_dict['fullname']
+        if("email" in user_dict):
+            user.email = user_dict['email']
+        if("password" in user_dict):
+            user.password = user_dict['password']
+        if("rol" in user_dict):
+            user.rol = user_dict['rol']
+        user.save()
+        result = UserSchema().dump(user)
+        return result
 
     @token_required_admin
     def delete(self, id):
-        pass
+        user = User.get_by_id(id)
+        user.active = 0;
+        user.save()
+        result = UserSchema().dump(user)
+        return result
 
 
 class UserListResource(Resource):
@@ -34,8 +52,6 @@ class UserListResource(Resource):
     @token_required_admin
     def post(self):
         data = json.loads(request.data)
-        print(data)
-        print(json.dumps(data))
         user_dict = UserSchema().loads(json.dumps(data))
         user = User(
             fullname=user_dict['fullname'],
