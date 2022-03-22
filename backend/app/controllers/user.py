@@ -1,28 +1,25 @@
 from flask_restful import Resource
 from app import db
 from app.models.user import User
+from app.serializers.user import UserSchema
 
-
-class User(Resource):
+class UserResource(Resource):
     def get(self, id):
-        pass
+        user = User.get_by_id(id)
+        result = UserSchema().dumps(user)
+        return result
 
-    def put(self, id):
-        pass
-
-    def patch(self, id):
+    def post(self, id):
         pass
 
     def delete(self, id):
         pass
 
 
-class UserList(Resource):
+class UserListResource(Resource):
 
     def get(self):
-        return User.query.all()
-#return User.read_all()#
-    def post(self):
-        pass
-
+        users = User.get_all()
+        result = UserSchema().dumps(users, many=True)
+        return result
 

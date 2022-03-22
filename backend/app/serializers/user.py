@@ -1,11 +1,14 @@
-from pydantic import BaseModel, constr
+from marshmallow import fields
+from app.main.ext import ma
 
+class UserSchema(ma.Schema):
+    id = fields.Integer(dump_only=True)
+    fullname = fields.String()
+    username = fields.String()
+    password = fields.String()
+    email = fields.String()
+    #rol = fields.Nested('RolSchema', many=True)
 
-class User(BaseModel):
-    id: int
-    fullname: constr(max_length=100)  # https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
-    username: constr(max_length=20)
-    password: constr(max_length=50)
-
-    class Config:
-        orm_mode = True
+# class RolSchema(ma.Schema):
+#     id = fields.Integer(dump_only=True)
+#     rol = fields.String()

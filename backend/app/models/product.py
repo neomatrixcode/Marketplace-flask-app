@@ -1,18 +1,18 @@
 from sqlalchemy import Integer, String
 
-from app import db
+from app.main.database import db, BaseModelMixin
 
-class Product(db.Model):
+class Product(db.Model, BaseModelMixin):
     """
     Product Model
     """
     __tablename__ = 'products'
 
     sku = db.Column(String(500), primary_key=True)
-    name = db.Column(String(100), nullable=False)
-    price = db.Column(String(20), nullable=False, unique=True)
-    mark = db.Column(String(50), nullable=False)
-    quantity = db.Column(Integer, nullable=False, unique=True)
+    name = db.Column(String(100), nullable=True)
+    price = db.Column(Integer, nullable=True)
+    mark = db.Column(String(50), nullable=True)
+    quantity = db.Column(Integer, nullable=True)
 
     def __init__(self, sku, name, price, mark, quantity):
         self.sku = sku

@@ -8,6 +8,7 @@ echo "
 # Let the DB start
 sleep 10;
 # Run migrations
+flask db init
 flask db migrate
 flask db upgrade
 "

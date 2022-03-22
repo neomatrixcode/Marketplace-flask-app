@@ -1,14 +1,14 @@
 from sqlalchemy import Integer, String, ForeignKey
 
-from app import db
+from app.main.database import db, BaseModelMixin
 
-class User(db.Model):
+class User(db.Model, BaseModelMixin):
     """
     User Model
     """
     __tablename__ = 'users'
 
-    id = db.Column(Integer, primary_key=True)
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
     fullname = db.Column(String(100), nullable=False)
     username = db.Column(String(20), nullable=False, unique=True)
     password = db.Column(String(50), nullable=False)

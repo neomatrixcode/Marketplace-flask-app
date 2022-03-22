@@ -18,7 +18,8 @@ class Config:
     # --------------------------------------------------------------------
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL','mysql://root:root@172.19.48.1:3306/db')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-
+    PROPAGATE_EXCEPTIONS = True
+    ERROR_404_HELP = True
 
     # SMTP server main
     # --------------------------------------------------------------------

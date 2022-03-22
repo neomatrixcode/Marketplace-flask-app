@@ -1,6 +1,7 @@
-from flask_restful import Api
-from app.controllers.user import UserList, User
+from app.controllers.user import UserListResource, UserResource
+from app.controllers.product import ProductListResource, ProductResource
 from app.main.errors import errors
+from flask_restful import Api
 
 # Flask API Configuration
 api = Api(
@@ -9,6 +10,8 @@ api = Api(
     prefix='/api'
 )
 
-api.add_resource(UserList, '/users')
-api.add_resource(User, '/users/<int:id>/')
+api.add_resource(UserListResource, '/users')
+api.add_resource(UserResource, '/users/<int:id>/')
 
+api.add_resource(ProductListResource, '/products')
+api.add_resource(ProductResource, '/products/<string:sku>/')

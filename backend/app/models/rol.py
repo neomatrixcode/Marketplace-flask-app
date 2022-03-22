@@ -1,8 +1,8 @@
 from sqlalchemy import Integer, String
 
-from app import db
+from app.main.database import db, BaseModelMixin
 
-class Rol(db.Model):
+class Rol(db.Model, BaseModelMixin):
     """
     Rol Model
     """

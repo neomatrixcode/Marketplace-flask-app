@@ -1,11 +1,10 @@
 errors = {
     'UserAlreadyExistsError': {
-        'message': "A user with that username already exists.",
+        'message': "El nombre de usuario ya esta registrado, utilice otro.",
         'status': 409,
     },
     'ResourceDoesNotExist': {
-        'message': "A resource with that ID no longer exists.",
+        'message': "El recurso no existe.",
         'status': 410,
-        'extra': "Any extra information you want.",
     },
 }
