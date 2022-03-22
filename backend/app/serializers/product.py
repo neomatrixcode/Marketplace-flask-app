@@ -1,4 +1,4 @@
-from marshmallow import fields
+from marshmallow import fields, INCLUDE
 from app.main.ext import ma
 
 class ProductSchema(ma.Schema):
@@ -7,3 +7,6 @@ class ProductSchema(ma.Schema):
     price = fields.Integer()
     mark = fields.String()
     quantity = fields.Integer()
+
+    class Meta:
+        unknown = INCLUDE
