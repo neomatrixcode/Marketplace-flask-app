@@ -3,16 +3,21 @@ from app import db
 from flask import request
 import json
 from app.models.product import Product
+from app.models.records import Records
 from app.serializers.product import ProductSchema
 from app.main.auth_middleware import token_required
 from app.main.auth_middleware import token_required_admin
+from app.main.auth_middleware import get_token, get_current_user
 
 class ProductResource(Resource):
     @token_required
     def get(self, sku):
+        current_user = get_current_user(get_token(request.headers))
         product = Product.get_by_id(sku)
         result={}
         if product.active == True:
+            records = Records(id_user=current_user.id, id_products=product.sku)
+            records.save()
             result = ProductSchema().dump(product)
         return result
 
