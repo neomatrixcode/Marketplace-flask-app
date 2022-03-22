@@ -39,6 +39,7 @@ packaging==20.9
 pdoc3==0.10.0
 pep517==0.12.0
 progress==1.6
+PyJWT==2.3.0
 pyparsing==2.4.7
 pyrsistent==0.18.1
 pytz==2022.1

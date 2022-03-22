@@ -6,7 +6,7 @@ class Config:
 
     # project root directory
     BASE_DIR = os.path.join(os.pardir, os.path.dirname(__file__))
-    SECRET_KEY = os.environ.get("SECRET_KEY")
+    SECRET_KEY = os.environ.get("SECRET_KEY","89y7h7666t687")
 
     # Flask Configuration
     # --------------------------------------------------------------------

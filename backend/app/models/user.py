@@ -24,6 +24,6 @@ class User(db.Model, BaseModelMixin):
         self.rol = rol
 
     def __repr__(self):
-        return "<User(fullname='%s', username='%s')>" % (self.fullname, self.username)
+        return "<User(fullname='%s', username='%s', id='%d')>" % (self.fullname, self.username,self.id)
 
 
