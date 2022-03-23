@@ -1,13 +1,52 @@
 from flask_restful import Resource
 from app import db
+import os
 from flask import request
 import json
+import boto3
 from app.models.product import Product
 from app.models.records import Records
 from app.serializers.product import ProductSchema
 from app.main.auth_middleware import token_required
 from app.main.auth_middleware import token_required_admin
 from app.main.auth_middleware import get_token, get_current_user
+from app.models.user import User
+
+def send_plain_email(producto):
+    ses_client = boto3.client("ses",
+         region_name="us-east-1",
+         aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+         aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+         )
+
+    CHARSET = "UTF-8"
+
+    users = User.simple_filter(rol=1)
+
+    try:
+        for user in users:
+            response = ses_client.send_email(
+                Destination={
+                    "ToAddresses": [
+                        str(user.email),
+                    ],
+                },
+                Message={
+                    "Body": {
+                        "Text": {
+                            "Charset": CHARSET,
+                            "Data": "El producto "+str(producto)+" se ha modificado",
+                        }
+                    },
+                    "Subject": {
+                        "Charset": CHARSET,
+                        "Data": "Notification Email",
+                    },
+                },
+                Source=os.environ.get('EMAIL_SOURCE'),
+            )
+    except:
+        print("Amazon SES sigue en modo Sandbox")
 
 class ProductResource(Resource):
     @token_required
@@ -36,6 +75,7 @@ class ProductResource(Resource):
             product.quantity = product_dict['quantity']
         product.save()
         result = ProductSchema().dump(product)
+        send_plain_email(ProductSchema().dumps(product))
         return result
 
     @token_required_admin
@@ -44,6 +84,7 @@ class ProductResource(Resource):
         product.active = 0;
         product.save()
         result = ProductSchema().dump(product)
+        send_plain_email(ProductSchema().dumps(product))
         return result
 
 class ProductListResource(Resource):

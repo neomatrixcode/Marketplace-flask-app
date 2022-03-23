@@ -16,19 +16,17 @@ class Config:
 
     # sqlalchemy database main
     # --------------------------------------------------------------------
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL','mysql://root:root@172.19.48.1:3306/db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL','mysql://root:root@192.168.1.67:3306/db')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     PROPAGATE_EXCEPTIONS = True
     ERROR_404_HELP = True
 
     # SMTP server main
     # --------------------------------------------------------------------
-    # SERVER_EMAIL = 'Acevedo <josuecevedo@gmail.com>'
-    # DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', SERVER_EMAIL)
-    # EMAIL_HOST = os.environ.get('EMAIL_HOST')
-    # EMAIL_PORT = os.environ.get('EMAIL_PORT')
-    # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    REGION_NAME= os.environ.get('REGION_NAME',"us-east-1")
+    AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    EMAIL_SOURCE=os.environ.get('EMAIL_SOURCE')
 
 
 class DevelopmentConfig(Config):

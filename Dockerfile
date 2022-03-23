@@ -15,10 +15,6 @@ RUN pip3 install mysqlclient
 # application folder
 ENV APP_DIR /app
 
-# # Install requirements
-# COPY requirements.txt /tmp/requirements.txt
-# RUN pip install --no-cache-dir -r /tmp/requirements.txt
-
 # app dir
 RUN mkdir ${APP_DIR} \
 	&& chown -R nginx:nginx ${APP_DIR} \
@@ -27,7 +23,13 @@ RUN mkdir ${APP_DIR} \
 VOLUME ${APP_DIR}
 WORKDIR ${APP_DIR}
 
-#COPY /app ${APP_DIR}
+COPY /backend ${APP_DIR}
+
+# # Install requirements
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+#
 # expose web server port
 # only http, for ssl use reverse proxy
 EXPOSE 80
@@ -37,8 +39,5 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY app.ini /app.ini
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
-# # Add demo app
-# COPY ./bakend /app
-# WORKDIR /app
-# exectute start up script
+
 CMD ["/start.sh"]}

@@ -17,7 +17,7 @@ def get_current_user(token):
         data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
         current_user=User.get_by_id(data["user_id"])
     except Exception as e:
-         raise Exception("Something went wrong")
+         raise ValueError("Something went wrong")
     return current_user
 
 def token_required_admin(f):
